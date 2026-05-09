@@ -18,4 +18,26 @@ export const createTask = (req: Request , res : Response) => {
     };
     tasks.push(newTask);
     res.status(201).json(newTask);
+};
+export const updateTask = (req : Request , res : Response) => {
+    const id = Number(req.params.id);
+    const task = tasks.find(t => t.id === id);
+
+    if(!task){
+        return res.status(404).json({
+            message : "Task not found"
+        })
+    }
+    task.completed = !task.completed;
+    res.json(task);
+};
+
+export const deleteTask = (req : Request, res : Response) => {
+    const id = Number(req.params.id);
+
+    tasks = tasks.filter(t => t.id !== id);
+
+    res.json({
+        message : "Task Deleted"
+    });
 }
