@@ -4,11 +4,14 @@ import { Task } from "../models/task";
 let tasks: Task[] = [];
 let idCounter = 1;
 
+
 export const getTasks = (req : Request , res : Response) => {
     res.json(tasks);
 };
 
 export const createTask = (req: Request , res : Response) => {
+
+    const cachedTasks = caches.get<Task[]> ("tasks");
     const {title} = req.body;
 
     const newTask : Task = {
@@ -41,3 +44,5 @@ export const deleteTask = (req : Request, res : Response) => {
         message : "Task Deleted"
     });
 }
+
+
